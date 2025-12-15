@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="DuplicateFolderScanner.Pages.MainPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Duplicate Folder Scanner">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Input Section -->
+            <Border BackgroundColor="#F5F5F5" Padding="15" Stroke="LightGray" StrokeThickness="1">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Scan Configuration" FontAttributes="Bold" FontSize="16" />
+
+                    <!-- Folder Path Input -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Folder Path:" FontAttributes="Bold" />
+                        <Entry x:Name="FolderPathEntry" Placeholder="Enter folder path" />
+                    </VerticalStackLayout>
+
+                    <!-- Blacklist Input -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Blacklisted Names:" FontAttributes="Bold" />
+                        <Editor x:Name="BlacklistEditor" 
+                                Placeholder="Blacklisted names (comma-separated)" 
+                                HeightRequest="60" 
+                                AutoSize="TextChanges" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Control Buttons -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button x:Name="StartButton" Text="Start Scan" Clicked="OnStartScan" WidthRequest="120" />
+                <Button x:Name="CancelButton" Text="Cancel Scan" Clicked="OnCancelScan" WidthRequest="120" />
+            </HorizontalStackLayout>
+
+            <!-- Progress Section -->
+            <Border BackgroundColor="#F5F5F5" Padding="15" Stroke="LightGray" StrokeThickness="1">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Scan Progress" FontAttributes="Bold" FontSize="16" />
+
+                    <!-- Progress Bar -->
+                    <VerticalStackLayout Spacing="5">
+                        <ProgressBar x:Name="ProgressBar" HeightRequest="20" />
+                        <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="Progress:" FontAttributes="Bold" />
+                            <Label x:Name="ProgressValueLabel" Text="0%" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Status Information - Fixed layout -->
+                    <VerticalStackLayout Spacing="8" Padding="0,10,0,0">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Elapsed Time:" FontAttributes="Bold" WidthRequest="180" />
+                            <Label x:Name="ElapsedTimeValueLabel" Text="0s" HorizontalOptions="Start" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Estimated Time Remaining:" FontAttributes="Bold" WidthRequest="180" />
+                            <Label x:Name="ETAValueLabel" Text="waiting..." HorizontalOptions="Start" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Files Processed:" FontAttributes="Bold" WidthRequest="180" />
+                            <Label x:Name="FilesProcessedValueLabel" Text="0" HorizontalOptions="Start" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="Folders Scanned:" FontAttributes="Bold" WidthRequest="180" />
+                            <Label x:Name="FoldersScannedValueLabel" Text="0" HorizontalOptions="Start" />
+                        </HorizontalStackLayout>
+
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Current Folder:" FontAttributes="Bold" />
+                            <Label x:Name="CurrentFolderValueLabel" Text="Ready to scan..." LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Results Section -->
+            <Border BackgroundColor="#F5F5F5" Padding="15" Stroke="LightGray" StrokeThickness="1">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Duplicate Folders" FontAttributes="Bold" FontSize="16" />
+                    <CollectionView x:Name="DuplicatesCollection" HeightRequest="200">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Grid Padding="5" ColumnDefinitions="Auto,*">
+                                    <Label Grid.Column="0" Text="• " FontAttributes="Bold" />
+                                    <Label Grid.Column="1" Text="{Binding .}" LineBreakMode="TailTruncation" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
